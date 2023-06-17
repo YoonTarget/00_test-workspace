@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="PolymorphismPractice/src/|0524/src/|02_Test/src/|API_Practice/src/" kind="src" path=""/>
+	<classpathentry kind="src" path="02_Test/src"/>
+	<classpathentry kind="src" path="0524/src"/>
+	<classpathentry kind="src" path="API_Practice/src"/>
+	<classpathentry kind="src" path="PolymorphismPractice/src"/>
+	<classpathentry kind="output" path="02_Test/bin"/>
+</classpath>
