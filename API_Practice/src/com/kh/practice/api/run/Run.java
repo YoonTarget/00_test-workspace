@@ -91,9 +91,13 @@ public class Run {
 		
 		bc.down();
 		
-		System.out.println("========== <번외 4> 가위바위보를 이기면 그때까지의 경기 수만큼의 책을 랜덤하게 파일에 출력");
+		System.out.println("========== <번외 4> 가위바위보를 이기면 그때까지의 경기 수만큼의 책을 랜덤하게 파일에 저장");
 		
 		bc.rockScissorPaper();
+		
+		System.out.println("========== <번외 5> 파일 내용 출력 ==========");
+		
+		bc.fileRead();
 
 		sc.close();
 

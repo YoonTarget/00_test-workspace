@@ -1,5 +1,6 @@
 package com.kh.practice.api.model.vo;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 

@@ -262,21 +262,11 @@ public class BookController {
 			}
 		}
 		
-		System.out.println("추천 도서는");
-		
-		for(int i = 0; i < arr.length; i++) {
-			System.out.println(books[arr[i]]);
-		}
-		
-		System.out.println("입니다.");
-		
-	}
-	
-	public void fileSave() {
-		
 		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("recommendBooks.txt"))) {
-			oos.writeBytes("추천 도서는");
-			
+			oos.writeBytes("추천도서는");
+			for(int i = 0; i < arr.length; i++) {
+				oos.writeObject(books[arr[i]]);
+			}
 			oos.writeBytes("입니다.");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -286,10 +276,12 @@ public class BookController {
 	
 	public void fileRead() {
 		
-			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("recommendBooks.txt"))) {
-			
-			ois.readObject();
-			
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("recommendBooks.txt"))) {
+			System.out.println(ois.readObject());
+			System.out.println(ois.readObject());
+			System.out.println(ois.readObject());
+			System.out.println(ois.readObject());
+			System.out.println(ois.readObject());
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {

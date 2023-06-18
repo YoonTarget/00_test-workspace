@@ -13,4 +13,6 @@ public class Run {
 		ManageCustomer mc = new ManageCustomer(new Customer[2], 0);
 		mc.setC(new Vip("lee", 20, "01012345678", "서울시 양천구", "id123", "pwd456"));
 		*/
+		
+	}
 }
