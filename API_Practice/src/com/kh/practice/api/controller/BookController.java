@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Scanner;
@@ -20,13 +21,21 @@ public class BookController {
 	// private 접근제한자로 크기 5의 Book 객체 배열 생성
 	// 각각의 인덱스에 접근하여 샘플 데이터 넣어서 객체 생성
 	private int count = 5;
-	private Book[] books = new Book[count];
+//	private Book[] books = new Book[count];
+//	{
+//		books[0] = new Book("자바의 정석", "차은우", "나무", new Date(2023 - 1900, 06 - 1, 14), 10000);
+//		books[1] = new Book("여러분 파이팅", "주지훈", "사과", new Date(2023 - 1900, 05 - 1, 11), 9000);
+//		books[2] = new Book("API의 모든 것", "문동은", "오렌지", new Date(2020 - 1900, 04 - 1, 25), 5000);
+//		books[3] = new Book("언어의 천재", "장원영", "키위", new Date(2015 - 1900, 01 - 1, 01), 15000);
+//		books[4] = new Book("개발왕국", "시연쌤", "바나나", new Date(2022 - 1900, 12 - 1, 25), 12000);
+//	}
+	private ArrayList<Book> list = new ArrayList<Book>();
 	{
-		books[0] = new Book("자바의 정석", "차은우", "나무", new Date(2023 - 1900, 06 - 1, 14), 10000);
-		books[1] = new Book("여러분 파이팅", "주지훈", "사과", new Date(2023 - 1900, 05 - 1, 11), 9000);
-		books[2] = new Book("API의 모든 것", "문동은", "오렌지", new Date(2020 - 1900, 04 - 1, 25), 5000);
-		books[3] = new Book("언어의 천재", "장원영", "키위", new Date(2015 - 1900, 01 - 1, 01), 15000);
-		books[4] = new Book("개발왕국", "시연쌤", "바나나", new Date(2022 - 1900, 12 - 1, 25), 12000);
+		list.add(new Book("자바의 정석", "차은우", "나무", new Date(2023 - 1900, 06 - 1, 14), 10000));
+		list.add(new Book("여러분 파이팅", "주지훈", "사과", new Date(2023 - 1900, 05 - 1, 11), 9000));
+		list.add(new Book("API의 모든 것", "문동은", "오렌지", new Date(2020 - 1900, 04 - 1, 25), 5000));
+		list.add(new Book("언어의 천재", "장원영", "키위", new Date(2015 - 1900, 01 - 1, 01), 15000));
+		list.add(new Book("개발왕국", "시연쌤", "바나나", new Date(2022 - 1900, 12 - 1, 25), 12000));
 	}
 	
 	Scanner sc = new Scanner(System.in);
@@ -43,7 +52,7 @@ public class BookController {
 //		}
 		
 		// 2) for each문 방법 (향상된 for문)
-		for(Book b : books) {
+		for(Book b : list) {
 			System.out.println(b);
 		}
 	}
@@ -84,14 +93,10 @@ public class BookController {
 		
 		// 3. 나머지 전달받은 값들과 위에서 변환작업을 해준 price와 date값을가지고
 		// Book클래스의 매개변수 생성자를 통해 생성
-
+		
 		count++;
-		
-		Book[] copy = Arrays.copyOf(books, count);
-		
-		copy[count - 1] = new Book(newTitle, newAuthor, newPublisher, publishDate, price); 
-		
-		books = copy;
+
+		list.add(new Book(newTitle, newAuthor, newPublisher, publishDate, price));
 		
 		System.out.println("추가도서 추가 완료!!");
 	}
@@ -102,7 +107,7 @@ public class BookController {
 		// "xxxx년 xx월 xx일 출간" 과 같은 패턴으로 출력
 		// SimpleDateFormat을 이용하여 출력
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 출간");
-		String str = sdf.format(books[count - 1].getPublishDate());
+		String str = sdf.format(list.get(count - 1).getPublishDate());
 		System.out.println(str);
 	}
 	
@@ -119,9 +124,9 @@ public class BookController {
 		
 		// 2) for each문 방법 (향상된 for문)
 		int total = 0;
-		for(Book bk : books) {
-			if(bk.getTitle().contains(searchTitle)) {
-				System.out.println(bk);
+		for(Book b : list) {
+			if(b.getTitle().contains(searchTitle)) {
+				System.out.println(b);
 				total++;
 			}
 		}
@@ -160,7 +165,7 @@ public class BookController {
 		}
 		
 		for(int i = 0; i < arr.length; i++) {
-			System.out.println(books[arr[i]]);
+			System.out.println(list.get(arr[i]));
 		}
 		
 		System.out.println("입니다.");
@@ -169,125 +174,122 @@ public class BookController {
 	
 	public void assign() {
 		
-		Book temp = null;
-		for(int i = 0; i < books.length; i++) {
-			for(int j = 1; j < books.length; j++) {
-				if(books[j - 1].getPrice() > books[j].getPrice()) {
-					temp = books[j - 1];
-					books[j - 1] = books[j];
-					books[j] = temp;
+		for(int i = 0; i < list.size(); i++) {
+			for(int j = 1; j < list.size(); j++) {
+				if(list.get(j - 1).getPrice() > list.get(j).getPrice()) {
+					list.add(j, list.get(j - 1));
+					list.remove(j - 1);
 				}
 			}
 		}
 		
-		for(Book bk : books) {
-			System.out.println(bk);
+		for(Book b : list) {
+			System.out.println(b);
 		}
 		
 	}
 	
-	public void down() {
-		
-		Book temp = null;
-		for(int i = 0; i < books.length; i++) {
-			for(int j = 1; j < books.length; j++) {
-				int result = books[j -1].getPublishDate().compareTo(books[j].getPublishDate());
-				if(result == -1) {
-					temp = books[j];
-					books[j] = books[j - 1];
-					books[j - 1] = temp;
-				}
-			}
-		}
-		
-		for(Book bk : books) {
-			System.out.println(bk);
-		}
-		
-	}
-	
-	public void rockScissorPaper() {
-		
-		System.out.println("가위바위보 시이이이작!!!");
-		
-		int total = 0;
-		int win = 0;
-		int draw = 0;
-		int lose = 0;
-		
-		while(true) {
-			int num = (int)(Math.random() * 3 + 1);
-			String com = "";
-			
-			switch(num) {
-			case 1 :
-				com = "가위";
-				break;
-			case 2 :
-				com = "바위";
-				break;
-			default :
-				com = "보";
-			}
-			
-			System.out.print("가위/바위/보 입력 : ");
-			String user = sc.nextLine();
-			
-			System.out.println("유저 : " + user);
-			System.out.println("컴퓨터 : " + com);
-			
-			total++;
-			if(user.equals(com)) {
-				System.out.println("비겼네용!");
-				draw++;
-			} else if(user.equals("가위") && com.equals("보") || user.equals("바위") && com.equals("가위") || user.equals("보") && com.equals("바위")) {
-				System.out.println("이겼어요!!");
-				win++;
-				System.out.printf("총전적 : %d전 %d승 %d무 %d패\n", total, win, draw, lose);
-				break;
-			} else {
-				System.out.println("졌어요ㅠㅠ");
-				lose++;
-			}
-		}
-		
-		int[] arr = new int[total];
-		
-		for(int i = 0; i < arr.length; i++) {
-			arr[i] = (int)(Math.random() * (count - 1) + 0);
-			for(int j = 0; j < i; j++) {
-				if(arr[i] == arr[j]) {
-					i--;
-				}
-			}
-		}
-		
-		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("recommendBooks.txt"))) {
-			oos.writeBytes("추천도서는");
-			for(int i = 0; i < arr.length; i++) {
-				oos.writeObject(books[arr[i]]);
-			}
-			oos.writeBytes("입니다.");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	public void fileRead() {
-		
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("recommendBooks.txt"))) {
-			System.out.println(ois.readObject());
-			System.out.println(ois.readObject());
-			System.out.println(ois.readObject());
-			System.out.println(ois.readObject());
-			System.out.println(ois.readObject());
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-	}
+//	public void down() {
+//		
+//		for(int i = 0; i < books.length; i++) {
+//			for(int j = 1; j < books.length; j++) {
+//				int result = books[j -1].getPublishDate().compareTo(books[j].getPublishDate());
+//				if(result == -1) {
+//					temp = books[j];
+//					books[j] = books[j - 1];
+//					books[j - 1] = temp;
+//				}
+//			}
+//		}
+//		
+//		for(Book bk : books) {
+//			System.out.println(bk);
+//		}
+//		
+//	}
+//	
+//	public void rockScissorPaper() {
+//		
+//		System.out.println("가위바위보 시이이이작!!!");
+//		
+//		int total = 0;
+//		int win = 0;
+//		int draw = 0;
+//		int lose = 0;
+//		
+//		while(true) {
+//			int num = (int)(Math.random() * 3 + 1);
+//			String com = "";
+//			
+//			switch(num) {
+//			case 1 :
+//				com = "가위";
+//				break;
+//			case 2 :
+//				com = "바위";
+//				break;
+//			default :
+//				com = "보";
+//			}
+//			
+//			System.out.print("가위/바위/보 입력 : ");
+//			String user = sc.nextLine();
+//			
+//			System.out.println("유저 : " + user);
+//			System.out.println("컴퓨터 : " + com);
+//			
+//			total++;
+//			if(user.equals(com)) {
+//				System.out.println("비겼네용!");
+//				draw++;
+//			} else if(user.equals("가위") && com.equals("보") || user.equals("바위") && com.equals("가위") || user.equals("보") && com.equals("바위")) {
+//				System.out.println("이겼어요!!");
+//				win++;
+//				System.out.printf("총전적 : %d전 %d승 %d무 %d패\n", total, win, draw, lose);
+//				break;
+//			} else {
+//				System.out.println("졌어요ㅠㅠ");
+//				lose++;
+//			}
+//		}
+//		
+//		int[] arr = new int[total];
+//		
+//		for(int i = 0; i < arr.length; i++) {
+//			arr[i] = (int)(Math.random() * (count - 1) + 0);
+//			for(int j = 0; j < i; j++) {
+//				if(arr[i] == arr[j]) {
+//					i--;
+//				}
+//			}
+//		}
+//		
+//		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("recommendBooks.txt"))) {
+//			oos.writeBytes("추천도서는");
+//			for(int i = 0; i < arr.length; i++) {
+//				oos.writeObject(books[arr[i]]);
+//			}
+//			oos.writeBytes("입니다.");
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		
+//	}
+//	
+//	public void fileRead() {
+//		
+//		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("recommendBooks.txt"))) {
+//			System.out.println(ois.readObject());
+//			System.out.println(ois.readObject());
+//			System.out.println(ois.readObject());
+//			System.out.println(ois.readObject());
+//			System.out.println(ois.readObject());
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//		
+//	}
 
 }

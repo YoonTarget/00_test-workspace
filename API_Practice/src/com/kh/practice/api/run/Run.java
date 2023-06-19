@@ -89,15 +89,15 @@ public class Run {
 		
 		System.out.println("========== <번외 3> 출판일이 최근 것부터 내림차순으로 정렬 ==========");
 		
-		bc.down();
+		//bc.down();
 		
 		System.out.println("========== <번외 4> 가위바위보를 이기면 그때까지의 경기 수만큼의 책을 랜덤하게 파일에 저장");
 		
-		bc.rockScissorPaper();
+		//bc.rockScissorPaper();
 		
 		System.out.println("========== <번외 5> 파일 내용 출력 ==========");
 		
-		bc.fileRead();
+		//bc.fileRead();
 
 		sc.close();
 
